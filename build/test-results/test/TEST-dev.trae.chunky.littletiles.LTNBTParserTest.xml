@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.trae.chunky.littletiles.LTNBTParserTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-14T13:38:03" hostname="DESKTOP-HK74072" time="0.009">
+  <properties/>
+  <testcase name="testBasicParsing()" classname="dev.trae.chunky.littletiles.LTNBTParserTest" time="0.002"/>
+  <testcase name="testDefaultGrid()" classname="dev.trae.chunky.littletiles.LTNBTParserTest" time="0.0"/>
+  <testcase name="testLittleBoxInvalid()" classname="dev.trae.chunky.littletiles.LTNBTParserTest" time="0.0"/>
+  <testcase name="testEmptyContent()" classname="dev.trae.chunky.littletiles.LTNBTParserTest" time="0.0"/>
+  <testcase name="testNullNBT()" classname="dev.trae.chunky.littletiles.LTNBTParserTest" time="0.003"/>
+  <testcase name="testLittleBoxFromArray()" classname="dev.trae.chunky.littletiles.LTNBTParserTest" time="0.0"/>
+  <testcase name="testCustomGrid()" classname="dev.trae.chunky.littletiles.LTNBTParserTest" time="0.0"/>
+  <testcase name="testLittleGrid()" classname="dev.trae.chunky.littletiles.LTNBTParserTest" time="0.0"/>
+  <system-out><![CDATA[[WARNING] LTNBTParser: null NBT tag
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

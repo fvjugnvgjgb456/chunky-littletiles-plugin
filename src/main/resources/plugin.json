@@ -1,0 +1,9 @@
+{
+  "name": "LittleTiles",
+  "version": "0.1.0",
+  "author": "TRAE Dev",
+  "description": "Chunky plugin for rendering LittleTiles structures",
+  "targetVersion": "2.5.0",
+  "main": "dev.trae.chunky.littletiles.LittleTilesPlugin",
+  "dependencies": {}
+}
