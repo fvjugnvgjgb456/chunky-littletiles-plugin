@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dev.trae.chunky.littletiles.LTBlockProviderTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-14T13:38:03" hostname="DESKTOP-HK74072" time="0.191">
+<testsuite name="dev.trae.chunky.littletiles.LTBlockProviderTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-14T14:02:50" hostname="DESKTOP-HK74072" time="0.212">
   <properties/>
   <testcase name="testIgnoresOtherBlocks()" classname="dev.trae.chunky.littletiles.LTBlockProviderTest" time="0.002"/>
-  <testcase name="testRecognizesLittleTilesBlock()" classname="dev.trae.chunky.littletiles.LTBlockProviderTest" time="0.189"/>
+  <testcase name="testRecognizesLittleTilesBlock()" classname="dev.trae.chunky.littletiles.LTBlockProviderTest" time="0.209"/>
   <testcase name="testGetSupportedBlocks()" classname="dev.trae.chunky.littletiles.LTBlockProviderTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

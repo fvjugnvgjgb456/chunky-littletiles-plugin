@@ -29,10 +29,11 @@ public class LTTilesBlock extends Block {
   
   @Override
   public Entity createBlockEntity(Vector3 position, CompoundTag entityTag) {
-    LTTilesEntity entity = new LTTilesEntity(position, entityTag);
-    Log.info(String.format("LTTilesBlock.createBlockEntity() created entity at (%.1f, %.1f, %.1f)",
-        position.x, position.y, position.z));
-    return entity;
+    if (DebugConfig.VERBOSE_ENTITY_CONSTRUCTION) {
+      Log.info(String.format("LTTilesBlock.createBlockEntity() at (%.1f, %.1f, %.1f)",
+          position.x, position.y, position.z));
+    }
+    return new LTTilesEntity(position, entityTag);
   }
   
   public Tag getBlockTag() {
