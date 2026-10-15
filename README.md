@@ -93,8 +93,6 @@ cd chunky-littletiles-plugin
 - [ ] 插件 API 文档和扩展机制
 
 ### 不确定是否可行
-- 动画支持（LittleTiles 动态门、电梯等）
-- 实时预览（Chunky 是离线渲染器）
 - 与其他模组的兼容性
 
 ## 贡献
