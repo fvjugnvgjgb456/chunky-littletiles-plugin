@@ -26,7 +26,6 @@
 **推荐阅读**：
 - [Chunky 源码](https://github.com/chunky-dev/chunky)（特别是 `chunky-core` 模块）
 - [LittleTiles 源码](https://github.com/CreativeMD/LittleTiles)（1.6.0-pre234-BETA 分支）
-- [docs/review/topics/](file:///f:/TRAE_DEV/docs/review/topics/)（项目研究报告）
 
 ---
 
@@ -70,7 +69,7 @@
 
 ### 1. BlockProvider 机制
 
-**文件**：[LTBlockProvider.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTBlockProvider.java)
+**文件**：[LTBlockProvider.java](file:chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTBlockProvider.java)
 
 Chunky 通过 `BlockSpec.toBlock()` 遍历 `BlockProvider` 列表查询方块。我们的 `LTBlockProvider` 注册到列表首位，拦截 `littletiles:tiles`。
 
@@ -90,7 +89,7 @@ public Block getBlockByTag(String name, Tag tag) {
 
 ### 2. NBT 解析
 
-**文件**：[LTNBTParser.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/LTNBTParser.java)
+**文件**：[LTNBTParser.java](file:chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/LTNBTParser.java)
 
 LittleTiles 1.6.0 NBT 结构：
 
@@ -125,7 +124,7 @@ BlockEntity
 
 ### 3. 几何转换
 
-**文件**：[GeometryConverter.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/GeometryConverter.java)
+**文件**：[GeometryConverter.java](file:chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/GeometryConverter.java)
 
 **坐标转换公式**：
 
@@ -153,7 +152,7 @@ worldCoord = blockPos + (gridCoord / grid.count)
 
 ### 4. 材质映射
 
-**文件**：[MaterialResolver.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/MaterialResolver.java)
+**文件**：[MaterialResolver.java](file:chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/MaterialResolver.java)
 
 **当前策略**：
 
@@ -177,7 +176,7 @@ worldCoord = blockPos + (gridCoord / grid.count)
 
 ### 5. 日志系统
 
-**文件**：[DebugConfig.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/DebugConfig.java)
+**文件**：[DebugConfig.java](file:chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/DebugConfig.java)
 
 **配置项**：
 
@@ -254,7 +253,7 @@ void testNewFeature() {
 
 ### 性能监控
 
-**文件**：[PerformanceMonitor.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/PerformanceMonitor.java)
+**文件**：[PerformanceMonitor.java](file:chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/PerformanceMonitor.java)
 
 会话结束时输出汇总报告：
 
@@ -274,9 +273,9 @@ MaterialResolver Cache: size=122, hits=672748, misses=122, hit rate=100.0%
 ### 1. 添加新的 Box 格式支持
 
 **文件修改**：
-1. [LTNBTParser.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/LTNBTParser.java) — `parseTile()` 方法
-2. [GeometryConverter.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/GeometryConverter.java) — 新增转换方法
-3. [LTTilesEntity.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTTilesEntity.java) — 调用新转换方法
+1. [LTNBTParser.java](file:chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/LTNBTParser.java) — `parseTile()` 方法
+2. [GeometryConverter.java](file:chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/GeometryConverter.java) — 新增转换方法
+3. [LTTilesEntity.java](file:chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTTilesEntity.java) — 调用新转换方法
 
 **测试**：
 - 单元测试（解析、转换）
@@ -296,9 +295,9 @@ MaterialResolver Cache: size=122, hits=672748, misses=122, hit rate=100.0%
 ### 3. 支持 children 嵌套结构
 
 **文件修改**：
-1. [LTTile.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/LTTile.java) — 添加 `children` 字段
-2. [LTNBTParser.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/LTNBTParser.java) — 递归解析 children
-3. [LTTilesEntity.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTTilesEntity.java) — 遍历 children 生成 primitives
+1. [LTTile.java](file:chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/LTTile.java) — 添加 `children` 字段
+2. [LTNBTParser.java](file:TRAE_DEV/chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/LTNBTParser.java) — 递归解析 children
+3. [LTTilesEntity.java](file:chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTTilesEntity.java) — 遍历 children 生成 primitives
 
 **注意事项**：
 - children 可能有多层嵌套
@@ -322,7 +321,7 @@ MaterialResolver Cache: size=122, hits=672748, misses=122, hit rate=100.0%
 
 ### 1. 启用详细日志
 
-编辑 [DebugConfig.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/DebugConfig.java)：
+编辑 [DebugConfig.java](file:chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/DebugConfig.java)：
 
 ```java
 VERBOSE_NBT_PARSER = true;
@@ -421,13 +420,6 @@ ENABLE_WARNINGS = true;
    - 改进方向：跳过损坏数据，记录错误但继续处理
 
 ---
-
-## 资源链接
-
-### 项目文档
-- [任务索引](file:///f:/TRAE_DEV/docs/tasks/INDEX.md) — 所有任务单
-- [研究报告](file:///f:/TRAE_DEV/docs/review/INDEX.md) — A/B 系列研究
-- [交接文件](file:///f:/TRAE_DEV/docs/handoff/CURRENT.md) — 当前状态
 
 ### 外部资源
 - [Chunky 文档](https://chunky-dev.github.io/docs/)
