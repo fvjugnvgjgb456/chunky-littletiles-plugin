@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dev.trae.chunky.littletiles.LittleTilesPluginTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-14T14:02:50" hostname="DESKTOP-HK74072" time="0.016">
+<testsuite name="dev.trae.chunky.littletiles.LittleTilesPluginTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-17T09:33:38" hostname="DESKTOP-HK74072" time="0.001">
   <properties/>
-  <testcase name="testPluginInstantiation()" classname="dev.trae.chunky.littletiles.LittleTilesPluginTest" time="0.016"/>
+  <testcase name="testPluginInstantiation()" classname="dev.trae.chunky.littletiles.LittleTilesPluginTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -51,7 +51,17 @@ public class LTTilesEntity extends Entity {
   public Collection<Primitive> primitives(Vector3 offset) {
     long startTime = DebugConfig.ENABLE_PERFORMANCE_TIMING ? System.nanoTime() : 0;
     
-    // Convert block position (world space) + offset
+    // Debug: log the offset parameter
+    if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+      System.out.println(String.format(
+          "[LTTilesEntity.primitives] Called with position=(%.1f,%.1f,%.1f) offset=(%.1f,%.1f,%.1f)",
+          position.x, position.y, position.z, offset.x, offset.y, offset.z
+      ));
+    }
+    
+    // position = absolute world block coords (Scene.java:1201); offset = -octreeOrigin
+    // (SceneEntities.java:259-267). position + offset = render-space block corner,
+    // same convention as SignEntity.java:545. No Y correction.
     Vector3 blockPos = new Vector3(position);
     blockPos.add(offset);
     

@@ -20,11 +20,16 @@ dependencies {
     // Chunky core dependency - using composite build
     compileOnly("se.llbit:chunky-core")
     
+    // JTS Topology Suite - optional dependency for C7 advanced geometry
+    // Using compileOnly to make it optional at runtime (graceful fallback if not present)
+    compileOnly("org.locationtech.jts:jts-core:1.19.0")
+    
     // Test dependencies - need Chunky at test runtime
     testImplementation(platform("org.junit:junit-bom:5.10.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.assertj:assertj-core:3.25.1")
     testImplementation("se.llbit:chunky-core") // Test needs Chunky classes
+    testImplementation("org.locationtech.jts:jts-core:1.19.0") // Test needs JTS
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

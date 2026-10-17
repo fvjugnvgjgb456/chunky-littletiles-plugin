@@ -1,5 +1,9 @@
 package dev.trae.chunky.littletiles;
 
+import dev.trae.chunky.littletiles.c7.BasicBoxParser;
+import dev.trae.chunky.littletiles.c7.BoxParser;
+import dev.trae.chunky.littletiles.c7.LegacySliceParser;
+import dev.trae.chunky.littletiles.c7.TransformableBoxParser;
 import se.llbit.log.Log;
 import se.llbit.nbt.CompoundTag;
 import se.llbit.nbt.IntArrayTag;
@@ -8,6 +12,7 @@ import se.llbit.nbt.NamedTag;
 import se.llbit.nbt.Tag;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,10 +22,21 @@ import java.util.List;
  * - grid (int, optional): defaults to 16 if missing
  * - content (CompoundTag): blockstate → [color, box1, box2, ...]
  * 
- * This parser handles basic 6-field box format only.
- * Extended boxes (7+ fields) and children structures are not supported in this version.
+ * C7: Uses parser chain (TransformableBoxParser → BasicBoxParser) for graceful fallback.
  */
 public class LTNBTParser {
+  
+  /**
+   * Box parser chain: try in order, first successful parse wins.
+   * 1. BasicBoxParser: 6-field AABB (C1-C6 original format)
+   * 2. TransformableBox: 7+ field + indicator < 0 (C7 advanced geometry)
+   * 3. LegacySlice: 7+ field + indicator >= 0 (fallback, extract AABB)
+   */
+  private static final List<BoxParser> BOX_PARSERS = Arrays.asList(
+      new BasicBoxParser(),
+      new TransformableBoxParser(),
+      new LegacySliceParser()
+  );
   
   /**
    * Parse result containing grid and tiles.
@@ -132,70 +148,28 @@ public class LTNBTParser {
         
         // Get int array without checking length first
         int[] boxData = boxTag.intArray();
-          if (boxData == null) {
-            if (DebugConfig.ENABLE_WARNINGS) {
-              String warnMsg = "LTNBTParser: box[" + i + "] is not IntArrayTag";
-              Log.warn(warnMsg);
-              System.out.println("[WARNING] " + warnMsg);
-            }
-            continue;
+        if (boxData == null) {
+          if (DebugConfig.ENABLE_WARNINGS) {
+            String warnMsg = "LTNBTParser: box[" + i + "] is not IntArrayTag";
+            Log.warn(warnMsg);
+            System.out.println("[WARNING] " + warnMsg);
           }
+          continue;
+        }
         
-        if (boxData.length == 6) {
-          // Basic box format: [minX, minY, minZ, maxX, maxY, maxZ]
-          try {
-            LittleBox box = LittleBox.fromArray(boxData);
-              if (!box.isValid()) {
-                if (DebugConfig.ENABLE_WARNINGS) {
-                  String warnMsg = "LTNBTParser: invalid box " + box + ", skipping";
-                  Log.warn(warnMsg);
-                  System.out.println("[WARNING] " + warnMsg);
-                }
-                continue;
-              }
+        // C7: Use parser chain for all box formats
+        LittleBox box = parseBox(boxData, blockstate, i);
+        if (box != null) {
+          if (box.isValid()) {
             tiles.add(new LTTile(blockstate, color, box));
-            } catch (IllegalArgumentException e) {
-              if (DebugConfig.ENABLE_WARNINGS) {
-                String warnMsg = "LTNBTParser: failed to parse box[" + i + "]: " + e.getMessage();
-                Log.warn(warnMsg);
-                System.out.println("[WARNING] " + warnMsg);
-              }
-            }
-        } else if (boxData.length == 7) {
-          // Extended box format: [faceCache, minX, minY, minZ, maxX, maxY, maxZ]
-          // Skip the first element (faceCache) and take elements 1-6
-          int[] basicBox = new int[6];
-          System.arraycopy(boxData, 1, basicBox, 0, 6);
-          try {
-            LittleBox box = LittleBox.fromArray(basicBox);
-              if (!box.isValid()) {
-                if (DebugConfig.ENABLE_WARNINGS) {
-                  String warnMsg = "LTNBTParser: invalid extended box " + box + ", skipping";
-                  Log.warn(warnMsg);
-                  System.out.println("[WARNING] " + warnMsg);
-                }
-                continue;
-              }
-            tiles.add(new LTTile(blockstate, color, box));
-            } catch (IllegalArgumentException e) {
-              if (DebugConfig.ENABLE_WARNINGS) {
-                String warnMsg = "LTNBTParser: failed to parse extended box[" + i + "]: " + e.getMessage();
-                Log.warn(warnMsg);
-                System.out.println("[WARNING] " + warnMsg);
-              }
-            }
-        } else if (boxData.length > 7) {
-          // Deformed box format (slopes, etc.) - skip for now (C3 scope)
-          if (DebugConfig.VERBOSE_NBT_PARSER) {
-            Log.info("LTNBTParser: box[" + i + "] has deformed data (length=" + boxData.length + "), skipping (C3 scope)");
-          }
-        } else {
+          } else {
+            // Box parsed but failed validation
             if (DebugConfig.ENABLE_WARNINGS) {
-              String warnMsg = "LTNBTParser: box[" + i + "] has invalid length " + boxData.length + ", expected 6 or 7";
-              Log.warn(warnMsg);
+              String warnMsg = "LTNBTParser: box[" + i + "] parsed but invalid: " + box;
               System.out.println("[WARNING] " + warnMsg);
             }
           }
+        }
       }
     }
     
@@ -229,6 +203,48 @@ public class LTNBTParser {
       }
       return LittleGrid.getDefault();
     }
+  }
+  
+  /**
+   * Parse a box using the parser chain (C7).
+   * 
+   * Parser chain: TransformableBoxParser → BasicBoxParser
+   * - First parser that succeeds returns the box
+   * - If all fail, returns null and logs warning
+   * 
+   * @param boxData NBT int array
+   * @param blockstate blockstate name for logging
+   * @param index box index for logging
+   * @return parsed LittleBox or null if all parsers fail
+   */
+  private static LittleBox parseBox(int[] boxData, String blockstate, int index) {
+    // Try each parser in order
+    for (BoxParser parser : BOX_PARSERS) {
+      try {
+        LittleBox result = parser.parse(boxData);
+        if (DebugConfig.VERBOSE_NBT_PARSER) {
+          System.out.println("LTNBTParser: " + parser.getClass().getSimpleName() + 
+                             " successfully parsed box[" + index + "] (length=" + boxData.length + ")");
+        }
+        return result;
+      } catch (BoxParser.BoxParseException e) {
+        // This parser can't handle it, try next
+        if (DebugConfig.VERBOSE_NBT_PARSER) {
+          System.out.println("LTNBTParser: " + parser.getClass().getSimpleName() + 
+                             " skipped box[" + index + "]: " + e.getMessage());
+        }
+      }
+    }
+    
+    // All parsers failed
+    if (DebugConfig.ENABLE_WARNINGS) {
+      String warnMsg = "LTNBTParser: failed to parse box[" + index + "] " +
+                       "(blockstate=" + blockstate + ", length=" + boxData.length + "), " +
+                       "all parsers rejected";
+      Log.warn(warnMsg);
+      System.out.println("[WARNING] " + warnMsg);
+    }
+    return null;
   }
   
   /**

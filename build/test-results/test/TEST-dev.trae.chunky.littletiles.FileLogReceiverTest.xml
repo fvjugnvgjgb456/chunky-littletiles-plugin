@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dev.trae.chunky.littletiles.FileLogReceiverTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-14T14:02:50" hostname="DESKTOP-HK74072" time="0.031">
+<testsuite name="dev.trae.chunky.littletiles.FileLogReceiverTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-17T09:33:38" hostname="DESKTOP-HK74072" time="0.019">
   <properties/>
-  <testcase name="testLogToFile(Path)" classname="dev.trae.chunky.littletiles.FileLogReceiverTest" time="0.025"/>
-  <testcase name="testLogException(Path)" classname="dev.trae.chunky.littletiles.FileLogReceiverTest" time="0.003"/>
-  <testcase name="testSessionHeader(Path)" classname="dev.trae.chunky.littletiles.FileLogReceiverTest" time="0.001"/>
+  <testcase name="testLogToFile(Path)" classname="dev.trae.chunky.littletiles.FileLogReceiverTest" time="0.011"/>
+  <testcase name="testLogException(Path)" classname="dev.trae.chunky.littletiles.FileLogReceiverTest" time="0.004"/>
+  <testcase name="testSessionHeader(Path)" classname="dev.trae.chunky.littletiles.FileLogReceiverTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
