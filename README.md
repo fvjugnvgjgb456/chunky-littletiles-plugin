@@ -1,24 +1,24 @@
 # Chunky LittleTiles Plugin
-
+**声明** — 本插件开发过程中使用AI协助编写。
 **Status: Pre-Alpha** — 功能非常有限，仅支持最基础的立方体渲染，不适合生产使用。
 
 Chunky 插件，用于在静态场景中渲染 Minecraft LittleTiles 模组建筑。
 
-## ⚠️ 当前限制（Pre-Alpha）
+##  当前限制（Pre-Alpha）
 
 ### 支持的功能
-- ✅ 基础立方体 tile（6-field 和 7-field box 格式）
-- ✅ 材质映射（blockstate → Minecraft 原版纹理）
-- ✅ 简单方块几何（AABB）
+-  基础立方体 tile（6-field 和 7-field box 格式）
+-  材质映射（blockstate → Minecraft 原版纹理）
+-  简单方块几何（AABB）
 
 ### **不支持**的功能（重要！）
-- ❌ **斜面和变形几何**（7+ field box、deformed box、slopes）
-- ❌ **嵌套结构**（children 字段）
-- ❌ **复杂 tile 类型**（门、梯子、绳索等）
-- ❌ **半透明和特殊材质**（玻璃、水、发光方块可能显示不正确）
-- ❌ **动画和动态元素**（仅静态渲染）
-- ❌ **纹理细节**（UV 映射固定，法线贴图未实现）
-- ❌ **性能优化**（大规模场景可能卡顿，BVH 构建时间长）
+-  **斜面和变形几何**（7+ field box、deformed box、slopes）
+-  **嵌套结构**（children 字段）
+-  **复杂 tile 类型**（门、梯子、绳索等）
+-  **半透明和特殊材质**（玻璃、水、发光方块可能显示不正确）
+-  **动画和动态元素**（仅静态渲染）
+-  **纹理细节**（UV 映射固定，法线贴图未实现）
+-  **性能优化**（大规模场景可能卡顿，BVH 构建时间长）
 
 ### 已知问题
 - 材质映射只支持原版方块，模组方块会显示为紫黑色问号方块
@@ -93,8 +93,6 @@ cd chunky-littletiles-plugin
 - [ ] 插件 API 文档和扩展机制
 
 ### 不确定是否可行
-- 动画支持（LittleTiles 动态门、电梯等）
-- 实时预览（Chunky 是离线渲染器）
 - 与其他模组的兼容性
 
 ## 贡献
