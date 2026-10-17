@@ -81,7 +81,7 @@ cd chunky-littletiles-plugin
 ## 开发路线
 
 ### 短期目标（下一阶段）
-- [ ] 支持 extended box format（7+ fields，斜面几何）
+- [√] 支持 extended box format（7+ fields，斜面几何）（2026 10.17 已完成）
 - [ ] 支持 children 嵌套结构
 - [ ] 改进材质系统（模组方块支持、UV 映射）
 - [ ] 性能优化（BVH 构建、内存占用）
