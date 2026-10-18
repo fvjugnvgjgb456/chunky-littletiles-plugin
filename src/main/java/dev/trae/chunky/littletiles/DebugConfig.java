@@ -38,7 +38,7 @@ public class DebugConfig {
    * Enable summary statistics (counts, totals).
    * WARNING: Generates ~30KB per 1000 entities in large scenes.
    */
-  public static final boolean ENABLE_SUMMARY_STATS = true;
+  public static final boolean ENABLE_SUMMARY_STATS = false;
   
   /**
    * Enable warning messages (invalid data, parse failures).
