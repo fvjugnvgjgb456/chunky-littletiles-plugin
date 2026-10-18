@@ -76,7 +76,7 @@
 
 ### 1. BlockProvider 机制
 
-**文件**：[LTBlockProvider.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTBlockProvider.java)
+**文件**：[LTBlockProvider.java](src/main/java/dev/trae/chunky/littletiles/LTBlockProvider.java)
 
 Chunky 通过 `BlockSpec.toBlock()` 遍历 `BlockProvider` 列表查询方块。我们的 `LTBlockProvider` 注册到列表首位，拦截 `littletiles:tiles`。
 
