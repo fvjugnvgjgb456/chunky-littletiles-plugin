@@ -85,10 +85,11 @@ cd chunky-littletiles-plugin
 
 ## 开发路线
 
-### 已完成任务（C1-C8）
-- [x] **C1-C6**: 基础立方体渲染（BlockProvider、NBT 解析、几何转换、材质映射、性能优化）
-- [x] **C7**: 高级几何支持（TransformableBox、8 角点偏移、斜面裁剪、UV 映射）
-- [x] **C8**: Children 嵌套结构 & Color 染色系统（递归解析、TintedTextureMaterial、生物群系染色）
+### 短期目标（下一阶段）
+- [√] 支持 extended box format（7+ fields，斜面几何）（2026 10.17 已完成）
+- [ ] 支持 children 嵌套结构
+- [ ] 改进材质系统（模组方块支持、UV 映射）
+- [ ] 性能优化（BVH 构建、内存占用）
 
 ### 下一阶段（C9+）
 - [ ] Fluid 方块支持（水/岩浆）
@@ -139,19 +140,6 @@ chunky-littletiles-plugin/
 ├── INSTALL.md                              # 安装指南
 └── README.md                               # 本文件
 ```
-
-## 技术亮点
-
-### C7: 高级几何支持
-- **TransformableBox 完整支持**：8 个角点独立偏移，支持任意斜面和变形几何
-- **几何裁剪算法**：移植 LittleTiles `requestCache()` 算法，将斜面裁剪到 AABB 包围盒内
-- **方块内相对 UV**：纹理坐标归一化到方块内，解决纹理拉伸问题
-- **面积检测**：自动跳过退化面（面积为 0），避免渲染器异常
-
-### C8: Children & Color 支持
-- **Children 递归解析**：支持 StructureParentCollection 嵌套结构，最大深度 10 层
-- **TintedTextureMaterial**：重写 `getColor(double u, double v)` 实现 ARGB 乘法混合
-- **生物群系染色**：为树叶、草方块等自动应用默认绿色（`0xFF48B518`）
 
 ## 许可证
 
