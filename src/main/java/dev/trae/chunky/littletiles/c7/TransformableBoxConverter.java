@@ -78,22 +78,38 @@ public class TransformableBoxConverter {
     return n;
   }
 
-  /** Convert a TransformableBox (offsets + flips) to textured triangles. */
+  /** Convert a TransformableBox (offsets + flips) to textured triangles with optional color tinting. */
   public static Collection<Primitive> boxToPrimitives(
-      TransformableBox box, LittleGrid grid, Vector3 blockPos, Texture texture) {
+      TransformableBox box, LittleGrid grid, Vector3 blockPos, Texture texture, int color, String blockstate) {
+    if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+      System.out.println(String.format(
+          "[TransformableBoxConverter.boxToPrimitives] Received color=0x%08X",
+          color));
+    }
     List<Strip> strips = computeStrips(box, tiltedCorners(box), box.getFlipped());
     if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
       System.out.println(String.format(
           "[TransformableBox] AABB=[%d,%d,%d]->[%d,%d,%d] grid=%d -> %d strips",
           box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, grid.count, strips.size()));
     }
-    return emit(strips, grid, blockPos, texture);
+    return emit(strips, grid, blockPos, texture, color, blockstate);
   }
 
   /** Plain AABB through the same emitter, so basic and transformable tiles share the UV convention. */
   public static Collection<Primitive> aabbToPrimitives(
-      dev.trae.chunky.littletiles.LittleBox box, LittleGrid grid, Vector3 blockPos, Texture texture) {
-    return emit(computeStrips(box, boxCorners(box), Flipped.none()), grid, blockPos, texture);
+      dev.trae.chunky.littletiles.LittleBox box, LittleGrid grid, Vector3 blockPos, Texture texture, int color, String blockstate) {
+    if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+      System.out.println(String.format(
+          "[TransformableBoxConverter.aabbToPrimitives] Received color=0x%08X",
+          color));
+    }
+    List<Strip> strips = computeStrips(box, boxCorners(box), Flipped.none());
+    if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+      System.out.println(String.format(
+          "[BasicAABB] AABB=[%d,%d,%d]->[%d,%d,%d] grid=%d -> %d strips",
+          box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, grid.count, strips.size()));
+    }
+    return emit(strips, grid, blockPos, texture, color, blockstate);
   }
 
   /** Box corners in grid units, indexed by AngleID ordinal (E=maxX, U=maxY, N=minZ). */
@@ -467,8 +483,44 @@ public class TransformableBoxConverter {
 
   /** Triangulate strips (convex fans) into world-space textured triangles. */
   private static Collection<Primitive> emit(
-      List<Strip> strips, LittleGrid grid, Vector3 blockPos, Texture texture) {
-    Material material = new TextureMaterial(texture);
+      List<Strip> strips, LittleGrid grid, Vector3 blockPos, Texture texture, int color, String blockstate) {
+    // Create material with optional color tinting
+    Material material;
+    int effectiveColor = color;
+    
+    // Debug: log blockstate parameter to diagnose tinting issue
+    if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+      System.out.println(String.format("  [emit] blockstate='%s', color=0x%08X", 
+          blockstate == null ? "NULL" : blockstate, color));
+    }
+    
+    // Apply default biome tinting for foliage blocks (Minecraft leaves/grass textures are grayscale)
+    if ((color == -1 || color == 0xFFFFFFFF) && blockstate != null) {
+      String lowerBlockstate = blockstate.toLowerCase();
+      if (lowerBlockstate.contains("leaves") || lowerBlockstate.contains("vine") || 
+          lowerBlockstate.contains("grass_block") || lowerBlockstate.contains("tall_grass") ||
+          lowerBlockstate.contains("fern") || lowerBlockstate.contains("seagrass")) {
+        effectiveColor = 0xFF48B518;  // RGB(72, 181, 24) - default grass/foliage green
+        if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+          System.out.println(String.format("  [emit] Applied foliage tint to: %s", blockstate));
+        }
+      }
+    }
+    
+    if (effectiveColor == -1 || effectiveColor == 0xFFFFFFFF) {
+      // No tint: use plain TextureMaterial
+      material = new TextureMaterial(texture);
+      if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+        System.out.println(String.format("  [emit] Using TextureMaterial (no tint), color=0x%08X", color));
+      }
+    } else {
+      // Apply color tint
+      material = new TintedTextureMaterial(texture, effectiveColor);
+      if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+        System.out.println(String.format("  [emit] Using TintedTextureMaterial, color=0x%08X", effectiveColor));
+      }
+    }
+    
     double scale = 1.0 / grid.count;
     List<Primitive> primitives = new ArrayList<>();
     for (Strip strip : strips) {

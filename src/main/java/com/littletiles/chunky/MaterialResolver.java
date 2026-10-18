@@ -13,13 +13,19 @@ import java.util.Map;
 /**
  * Resolves Minecraft blockstate names to Chunky Materials.
  * 
+ * Supports LittleTiles color tinting:
+ * - If color == -1 (0xFFFFFFFF): returns base Material (no tint)
+ * - If color != -1: returns TintedMaterial wrapping the base Material
+ * 
  * Uses Chunky's BlockSpec mechanism to query the default MinecraftBlockProvider,
  * extracting Material/Texture information for LittleTiles tiles.
  */
 public class MaterialResolver {
   
   /**
-   * Cache blockstate → Material mappings to avoid repeated queries.
+   * Cache (blockstate, color) → Material mappings to avoid repeated queries.
+   * Key format: "{blockstate}#{color_hex}" for tinted materials,
+   *             "{blockstate}" for untinted materials.
    */
   private static final Map<String, Material> MATERIAL_CACHE = new HashMap<>();
   
@@ -28,6 +34,17 @@ public class MaterialResolver {
    */
   private static int cacheHits = 0;
   private static int cacheMisses = 0;
+  
+  /**
+   * Resolve a blockstate and return its texture.
+   * 
+   * @param blockstateName Fully qualified blockstate name (namespace:id)
+   * @return The corresponding Texture
+   */
+  public static se.llbit.chunky.resources.Texture resolveTexture(String blockstateName) {
+    Material material = resolve(blockstateName);
+    return material.texture;
+  }
   
   /**
    * Resolve a blockstate name (e.g. "minecraft:white_terracotta") to a Chunky Material.

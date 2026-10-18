@@ -23,6 +23,7 @@ public class LTTilesEntity extends Entity {
   private final CompoundTag entityTag;
   private final LittleGrid grid;
   private final List<LTTile> tiles;
+  private final List<LTNBTParser.ChildStructure> children;
   
   public LTTilesEntity(Vector3 position, CompoundTag entityTag) {
     super(position);
@@ -39,10 +40,12 @@ public class LTTilesEntity extends Entity {
     LTNBTParser.ParseResult result = LTNBTParser.parse(entityTag);
     this.grid = result.grid;
     this.tiles = result.tiles;
+    this.children = result.children;
     
     // Summary only
-    if (DebugConfig.ENABLE_SUMMARY_STATS && tiles.size() > 0) {
-      String parsedMsg = String.format("Parsed Entity: grid=%d, tiles=%d", grid.count, tiles.size());
+    if (DebugConfig.ENABLE_SUMMARY_STATS && (tiles.size() > 0 || children.size() > 0)) {
+      String parsedMsg = String.format("Parsed Entity: grid=%d, tiles=%d, children=%d", 
+          grid.count, tiles.size(), children.size());
       System.out.println(parsedMsg);
     }
   }
@@ -66,11 +69,22 @@ public class LTTilesEntity extends Entity {
     blockPos.add(offset);
     
     List<Primitive> primitives = new ArrayList<>();
+    
+    // Render main tiles (with color tinting)
     for (LTTile tile : tiles) {
-      // 为每个 tile 生成带材质的 primitives (Box → 12 TexturedTriangles)
+      // 为每个 tile 生成带材质和染色的 primitives (Box → 12 TexturedTriangles)
       Collection<Primitive> tilePrimitives = GeometryConverter.boxToPrimitives(
-          tile.box, grid, blockPos, tile.blockstate);
+          tile.box, grid, blockPos, tile.blockstate, tile.color);
       primitives.addAll(tilePrimitives);
+    }
+    
+    // Render children structures (doors, windows, etc.) with color tinting
+    for (LTNBTParser.ChildStructure child : children) {
+      for (LTTile tile : child.tiles) {
+        Collection<Primitive> childPrimitives = GeometryConverter.boxToPrimitives(
+            tile.box, grid, blockPos, tile.blockstate, tile.color);
+        primitives.addAll(childPrimitives);
+      }
     }
     
     if (DebugConfig.ENABLE_PERFORMANCE_TIMING) {
@@ -78,12 +92,12 @@ public class LTTilesEntity extends Entity {
       double elapsedMs = elapsed / 1_000_000.0;
       
       if (elapsedMs > 1.0) { // Only log slow entities
-        String msg = String.format("Entity primitives: %d tiles → %d prims in %.2f ms", 
-            tiles.size(), primitives.size(), elapsedMs);
+        String msg = String.format("Entity primitives: %d tiles + %d children → %d prims in %.2f ms", 
+            tiles.size(), children.size(), primitives.size(), elapsedMs);
         System.out.println(msg);
       }
       
-      PerformanceMonitor.recordEntity(tiles.size(), primitives.size(), (long)elapsedMs);
+      PerformanceMonitor.recordEntity(tiles.size() + children.size(), primitives.size(), (long)elapsedMs);
     }
     
     return primitives;
@@ -96,6 +110,7 @@ public class LTTilesEntity extends Entity {
     json.add("position", position.toJson());
     json.add("grid", grid.count);
     json.add("tileCount", tiles.size());
+    json.add("childCount", children.size());
     return json;
   }
   

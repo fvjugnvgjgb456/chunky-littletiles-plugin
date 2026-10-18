@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-17T09:33:38" hostname="DESKTOP-HK74072" time="0.006">
+<testsuite name="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-18T03:05:24" hostname="DESKTOP-HK74072" time="0.007">
   <properties/>
-  <testcase name="uv_isBlockRelative()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.002"/>
-  <testcase name="plainBox_givesSixFacesTwelveTriangles()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.002"/>
+  <testcase name="uv_isBlockRelative()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
+  <testcase name="plainBox_givesSixFacesTwelveTriangles()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
   <testcase name="slope_hasTiltedFaceInsideBox()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
-  <testcase name="largeOffsetsFromLog_doNotRaiseTile()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.0"/>
-  <testcase name="aabbPath_matchesBoxSize()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.0"/>
-  <testcase name="readmeGoldenCase_staysInsideAabb()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.0"/>
+  <testcase name="largeOffsetsFromLog_doNotRaiseTile()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
+  <testcase name="aabbPath_matchesBoxSize()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
+  <testcase name="readmeGoldenCase_staysInsideAabb()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
   <system-out><![CDATA[[TransformableBox] AABB=[0,0,0]->[8,8,8] grid=16 -> 6 strips
 [TransformableBox] AABB=[0,0,0]->[16,16,16] grid=16 -> 5 strips
 [TransformableBox] AABB=[2,0,2]->[4,1,4] grid=4 -> 6 strips

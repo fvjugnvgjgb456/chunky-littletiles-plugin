@@ -13,7 +13,7 @@
 ### Step 1: Build the Plugin
 
 ```bash
-cd f:\TRAE_DEV\chunky-littletiles-plugin
+cd \chunky-littletiles-plugin
 .\gradlew.bat build
 ```
 
@@ -103,12 +103,11 @@ For rapid development iteration:
 4. LT 方块会自动渲染
 
 **预期行为**：
-- 基础立方体 tile 会正常显示纹理
-- 斜面、嵌套结构会被跳过
+- 基础立方体tiles,以及斜面、嵌套结构会正常显示纹理
 - 模组方块显示为紫黑色问号方块
 
 **性能提示**：
-- 大规模场景（> 1000 区块）BVH 构建可能需要数十分钟
+- 大规模场景（> 1000 区块）BVH 构建可能需要数分钟
 - 建议先测试小范围区块
 
 ## 调试

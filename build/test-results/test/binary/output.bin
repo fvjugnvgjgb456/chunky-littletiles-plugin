@@ -1,8 +1,8 @@
-*LTNBTParser: parsed 0 tiles with grid=16
-*LTNBTParser: parsed 0 tiles with grid=16
-*LTNBTParser: parsed 0 tiles with grid=16
+6LTNBTParser: parsed 0 tiles, 0 children with grid=16
+6LTNBTParser: parsed 0 tiles, 0 children with grid=16
+6LTNBTParser: parsed 0 tiles, 0 children with grid=16
 %[WARNING] LTNBTParser: null NBT tag
-*LTNBTParser: parsed 0 tiles with grid=32
+6LTNBTParser: parsed 0 tiles, 0 children with grid=32
 %LTTilesEntity at (10.0, 64.0, 20.0)
 ;[WARNING] LTNBTParser: missing or invalid 'content' field
 )+ITransformableBoxParser: parsed box with 0 enabled offsets, flipped=true

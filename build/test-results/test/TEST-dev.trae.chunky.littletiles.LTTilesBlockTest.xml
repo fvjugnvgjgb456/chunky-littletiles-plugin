@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dev.trae.chunky.littletiles.LTTilesBlockTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-17T09:33:38" hostname="DESKTOP-HK74072" time="0.004">
+<testsuite name="dev.trae.chunky.littletiles.LTTilesBlockTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-10-18T03:05:23" hostname="DESKTOP-HK74072" time="0.003">
   <properties/>
-  <testcase name="testBlockIsInvisible()" classname="dev.trae.chunky.littletiles.LTTilesBlockTest" time="0.001"/>
-  <testcase name="testCreateBlockEntity()" classname="dev.trae.chunky.littletiles.LTTilesBlockTest" time="0.002"/>
+  <testcase name="testBlockIsInvisible()" classname="dev.trae.chunky.littletiles.LTTilesBlockTest" time="0.0"/>
+  <testcase name="testCreateBlockEntity()" classname="dev.trae.chunky.littletiles.LTTilesBlockTest" time="0.001"/>
   <testcase name="testIsBlockEntity()" classname="dev.trae.chunky.littletiles.LTTilesBlockTest" time="0.0"/>
   <testcase name="testBlockName()" classname="dev.trae.chunky.littletiles.LTTilesBlockTest" time="0.0"/>
   <system-out><![CDATA[LTTilesEntity at (10.0, 64.0, 20.0)

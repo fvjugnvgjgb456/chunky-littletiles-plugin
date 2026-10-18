@@ -10,7 +10,7 @@ public class DebugConfig {
    * Enable detailed NBT parser logs (per-tile, per-box).
    * WARNING: Generates 100+ MB logs in large scenes.
    */
-  public static final boolean VERBOSE_NBT_PARSER = true;
+  public static final boolean VERBOSE_NBT_PARSER = false;
   
   /**
    * Enable detailed entity construction logs.
@@ -21,7 +21,7 @@ public class DebugConfig {
    * Enable verbose logging for primitive generation (TransformableBox conversion).
    * Logs each box's AABB, grid, and corner coordinates.
    */
-  public static final boolean VERBOSE_PRIMITIVE_GENERATION = true;
+  public static final boolean VERBOSE_PRIMITIVE_GENERATION = false;
   
   /**
    * Enable verbose logging for NBT box parsing.

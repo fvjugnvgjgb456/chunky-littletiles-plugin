@@ -1,5 +1,6 @@
 package com.littletiles.chunky;
 
+import dev.trae.chunky.littletiles.DebugConfig;
 import dev.trae.chunky.littletiles.LittleBox;
 import dev.trae.chunky.littletiles.LittleGrid;
 import dev.trae.chunky.littletiles.c7.TransformableBox;
@@ -34,26 +35,64 @@ public class GeometryConverter {
      * @param grid 网格精度
      * @param blockPos 方块在世界中的位置
      * @param blockstate tile 的 blockstate 名称（如 "minecraft:white_terracotta"）
+     * @param color ARGB color (0xAARRGGBB), -1 means no tint
      * @return 带材质的 Chunky Primitives（TexturedTriangles）
      */
     public static Collection<Primitive> boxToPrimitives(
         LittleBox box, 
         LittleGrid grid, 
         Vector3 blockPos, 
-        String blockstate
+        String blockstate,
+        int color
     ) {
+        // Debug: log color parameter received
+        if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+            System.out.println(String.format(
+                "[GeometryConverter.boxToPrimitives] Received color=0x%08X for blockstate=%s",
+                color, blockstate
+            ));
+        }
+        
+        // Resolve texture
+        Texture texture = MaterialResolver.resolveTexture(blockstate);
+        
         // Check if this is a TransformableBox (C7 advanced geometry)
         if (box instanceof TransformableBox) {
             TransformableBox tbox = (TransformableBox) box;
-            Material material = MaterialResolver.resolve(blockstate);
-            return TransformableBoxConverter.boxToPrimitives(tbox, grid, blockPos, material.texture);
+            if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+                System.out.println(String.format(
+                    "[GeometryConverter] Calling TransformableBoxConverter.boxToPrimitives with color=0x%08X",
+                    color
+                ));
+            }
+            return TransformableBoxConverter.boxToPrimitives(tbox, grid, blockPos, texture, color, blockstate);
         }
         
         // Basic AABB: same emitter as TransformableBox, so UVs are block-relative
         // (LittleTiles convention). Box.addXxxFaces stretched the full texture over every
         // face regardless of tile size, which distorted textures on small tiles.
-        Material material = MaterialResolver.resolve(blockstate);
-        return TransformableBoxConverter.aabbToPrimitives(box, grid, blockPos, material.texture);
+        if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+            System.out.println(String.format(
+                "[GeometryConverter] Calling TransformableBoxConverter.aabbToPrimitives with color=0x%08X",
+                color
+            ));
+        }
+        return TransformableBoxConverter.aabbToPrimitives(box, grid, blockPos, texture, color, blockstate);
+    }
+    
+    /**
+     * 将 LittleBox 转换为带材质的 Chunky Primitives（无 color 参数，默认白色）。
+     * 
+     * @deprecated 使用 boxToPrimitives(box, grid, blockPos, blockstate, color) 代替
+     */
+    @Deprecated
+    public static Collection<Primitive> boxToPrimitives(
+        LittleBox box, 
+        LittleGrid grid, 
+        Vector3 blockPos, 
+        String blockstate
+    ) {
+        return boxToPrimitives(box, grid, blockPos, blockstate, -1);
     }
     
     /**
