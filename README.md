@@ -2,9 +2,9 @@
 
 **Status: Pre-Alpha** — 功能非常有限，仅供测试和开发使用。
 
-Chunky 插件，用于渲染 Minecraft LittleTiles 模组建筑。
+Chunky 插件，用于在静态场景中渲染 Minecraft LittleTiles 模组建筑。
 
-## ⚠️ 当前限制（Pre-Alpha v0.1.1.0）
+## ⚠️ 当前限制（Pre-Alpha v0.1.1.1）
 
 ### 支持的功能
 - ✅ 基础立方体 tile（6-field 和 7-field box 格式）
@@ -14,17 +14,15 @@ Chunky 插件，用于渲染 Minecraft LittleTiles 模组建筑。
 - ✅ 材质映射（blockstate → Minecraft 原版纹理）
 - ✅ 斜面几何（斜坡、楔形、角落、柱子等）
 
-### **不支持**的功能
-- ❌ **blockstate 属性**（facing/waterlogged 等，已去除）
-- ❌ **流体方块**（水/岩浆，推迟到 C9）
-- ❌ **模组方块纹理**（非原版方块）
-- ❌ **透明/发光材质优化**（未验证）
-- ❌ **动画和动态元素**（仅静态渲染）
+### **不支持**的功能（重要！）
+- ⚠️ **有色 tiles 的 Materials Tab 属性同步**（使用颜色染色的 tiles 不会同步 Materials Tab 调整，已知限制）
+- ❌ **blockstate 属性**（facing/waterlogged 等）
+- ❌ **流动 Fluid**（`*_flowing[facing=...]`）
+- ❌ **模组方块专有纹理加载**（LT 添加的16种染色方块使用了非原版纹理，这超出了plugin的实现范围，故不会有这一功能，将来也不会有。）
 
 ### 已知问题
-- 模组方块会显示为紫黑色问号方块
 - 大规模场景 BVH 构建时间长（优化空间有限）
-- 没有 GUI 配置界面（需要手动编辑 DebugConfig.java）
+- 没有 GUI 配置界面（需要手动编辑 DebugConfig.java，会在后续alpha版本优化。）
 
 ## 版本兼容性
 
@@ -85,18 +83,27 @@ cd chunky-littletiles-plugin
 
 ## 开发路线
 
-### 短期目标（下一阶段）
-- [√] 支持 extended box format（7+ fields，斜面几何）（2026 10.17 已完成）
-- [ ] 支持 children 嵌套结构
-- [ ] 改进材质系统（模组方块支持、UV 映射）
-- [ ] 性能优化（BVH 构建、内存占用）
+### 已完成任务（C1-C8）
+- [x] **C1-C6**: 基础立方体渲染（BlockProvider、NBT 解析、几何转换、材质映射、性能优化）
+- [x] **C7**: 高级几何支持（TransformableBox、8 角点偏移、斜面裁剪、UV 映射）
+- [x] **C8**: Children 嵌套结构 & Color 染色系统（递归解析、TintedTextureMaterial、生物群系染色）
 
-### 下一阶段（C9+）
-- [ ] Fluid 方块支持（水/岩浆）
-- [ ] Blockstate 属性支持（facing/waterlogged）
-- [ ] 模组方块纹理
-- [ ] 透明/发光材质优化
+### 当前状态
+
+**版本**: 0.1.0-SNAPSHOT  
+**最后更新**: 2026-10-19 (C10 完成)  
+**开发阶段**: 稳定维护
+
+### 已完成阶段
+- [x] **C1-C6**: 基础立方体渲染
+- [x] **C7**: 高级几何支持（TransformableBox）
+- [x] **C8**: Children 嵌套结构 & Color 染色系统
+- [x] **C9**: Fluid 方块支持（水/岩浆/白岩浆）
+- [x] **C10**: Chunky Materials 功能集成（无色 tiles 支持）
+
+### 下一阶段（C11+）
 - [ ] GUI 配置界面
+- [ ] BVH性能优化，（可能的）GPU调用支持
 - [ ] 插件 API 文档
 
 ### 不确定是否可行
@@ -140,6 +147,19 @@ chunky-littletiles-plugin/
 ├── INSTALL.md                              # 安装指南
 └── README.md                               # 本文件
 ```
+
+## 技术亮点
+
+### C7: 高级几何支持
+- **TransformableBox 完整支持**：8 个角点独立偏移，支持任意斜面和变形几何
+- **几何裁剪算法**：移植 LittleTiles `requestCache()` 算法，将斜面裁剪到 AABB 包围盒内
+- **方块内相对 UV**：纹理坐标归一化到方块内，解决纹理拉伸问题
+- **面积检测**：自动跳过退化面（面积为 0），避免渲染器异常
+
+### C8: Children & Color 支持
+- **Children 递归解析**：支持 StructureParentCollection 嵌套结构，最大深度 10 层
+- **TintedTextureMaterial**：重写 `getColor(double u, double v)` 实现 ARGB 乘法混合
+- **生物群系染色**：为树叶、草方块等自动应用默认绿色（`0xFF48B518`）
 
 ## 许可证
 

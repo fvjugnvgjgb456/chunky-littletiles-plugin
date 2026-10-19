@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-18T03:05:24" hostname="DESKTOP-HK74072" time="0.007">
+<testsuite name="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-19T14:10:28" hostname="DESKTOP-HK74072" time="0.013">
   <properties/>
   <testcase name="uv_isBlockRelative()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
-  <testcase name="plainBox_givesSixFacesTwelveTriangles()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
+  <testcase name="plainBox_givesSixFacesTwelveTriangles()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.006"/>
   <testcase name="slope_hasTiltedFaceInsideBox()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
-  <testcase name="largeOffsetsFromLog_doNotRaiseTile()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
-  <testcase name="aabbPath_matchesBoxSize()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
+  <testcase name="largeOffsetsFromLog_doNotRaiseTile()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.0"/>
+  <testcase name="aabbPath_matchesBoxSize()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.0"/>
   <testcase name="readmeGoldenCase_staysInsideAabb()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
-  <system-out><![CDATA[[TransformableBox] AABB=[0,0,0]->[8,8,8] grid=16 -> 6 strips
+  <system-out><![CDATA[[TransformableBoxConverter.boxToPrimitives] block=minecraft:stone, color=0xFFFFFFFF
+[TransformableBox] AABB=[0,0,0]->[8,8,8] grid=16 -> 6 strips
+  [emit] C10: block=minecraft:stone, color=0xFFFFFFFF
+  [emit] C10: Using material, color=0xFFFFFFFF, result=UnknownBlock
+[TransformableBoxConverter.boxToPrimitives] block=minecraft:stone, color=0xFFFFFFFF
 [TransformableBox] AABB=[0,0,0]->[16,16,16] grid=16 -> 5 strips
+  [emit] C10: block=minecraft:stone, color=0xFFFFFFFF
+  [emit] C10: Using material, color=0xFFFFFFFF, result=UnknownBlock
+[TransformableBoxConverter.boxToPrimitives] block=minecraft:stone, color=0xFFFFFFFF
 [TransformableBox] AABB=[2,0,2]->[4,1,4] grid=4 -> 6 strips
+  [emit] C10: block=minecraft:stone, color=0xFFFFFFFF
+  [emit] C10: Using material, color=0xFFFFFFFF, result=UnknownBlock
+[TransformableBoxConverter.aabbToPrimitives] block=minecraft:stone, color=0xFFFFFFFF
+[BasicAABB] AABB=[0,0,0]->[2,1,2] grid=2 -> 6 strips
+  [emit] C10: block=minecraft:stone, color=0xFFFFFFFF
+  [emit] C10: Using material, color=0xFFFFFFFF, result=UnknownBlock
+[TransformableBoxConverter.boxToPrimitives] block=minecraft:stone, color=0xFFFFFFFF
 [TransformableBox] AABB=[0,0,0]->[2,1,2] grid=2 -> 8 strips
+  [emit] C10: block=minecraft:stone, color=0xFFFFFFFF
+  [emit] C10: Using material, color=0xFFFFFFFF, result=UnknownBlock
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

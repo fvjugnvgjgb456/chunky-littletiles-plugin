@@ -13,8 +13,8 @@
 ### Step 1: Build the Plugin
 
 ```bash
-cd \chunky-littletiles-plugin
-.\gradlew.bat build
+cd chunky-littletiles-plugin
+./gradlew build
 ```
 
 The plugin JAR will be generated at:
@@ -103,7 +103,8 @@ For rapid development iteration:
 4. LT 方块会自动渲染
 
 **预期行为**：
-- 基础立方体tiles,以及斜面、嵌套结构会正常显示纹理
+- 基础立方体 tile 会正常显示纹理
+- 斜面、嵌套结构会被跳过
 - 模组方块显示为紫黑色问号方块
 
 **性能提示**：

@@ -78,13 +78,17 @@ public class TransformableBoxConverter {
     return n;
   }
 
-  /** Convert a TransformableBox (offsets + flips) to textured triangles with optional color tinting. */
+  /**
+   * Convert a TransformableBox (offsets + flips) to textured triangles with optional color tinting or direct Material.
+   * C10: Uses vanilla Block for Materials Tab integration.
+   */
   public static Collection<Primitive> boxToPrimitives(
-      TransformableBox box, LittleGrid grid, Vector3 blockPos, Texture texture, int color, String blockstate) {
+      TransformableBox box, LittleGrid grid, Vector3 blockPos, Texture texture, int color, 
+      se.llbit.chunky.block.Block block, Material directMaterial) {
     if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
       System.out.println(String.format(
-          "[TransformableBoxConverter.boxToPrimitives] Received color=0x%08X",
-          color));
+          "[TransformableBoxConverter.boxToPrimitives] block=%s, color=0x%08X",
+          block.name, color));
     }
     List<Strip> strips = computeStrips(box, tiltedCorners(box), box.getFlipped());
     if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
@@ -92,16 +96,20 @@ public class TransformableBoxConverter {
           "[TransformableBox] AABB=[%d,%d,%d]->[%d,%d,%d] grid=%d -> %d strips",
           box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, grid.count, strips.size()));
     }
-    return emit(strips, grid, blockPos, texture, color, blockstate);
+    return emit(strips, grid, blockPos, texture, color, block, directMaterial);
   }
 
-  /** Plain AABB through the same emitter, so basic and transformable tiles share the UV convention. */
+  /**
+   * Plain AABB through the same emitter, so basic and transformable tiles share the UV convention.
+   * C10: Uses vanilla Block for Materials Tab integration.
+   */
   public static Collection<Primitive> aabbToPrimitives(
-      dev.trae.chunky.littletiles.LittleBox box, LittleGrid grid, Vector3 blockPos, Texture texture, int color, String blockstate) {
+      dev.trae.chunky.littletiles.LittleBox box, LittleGrid grid, Vector3 blockPos, Texture texture, int color, 
+      se.llbit.chunky.block.Block block, Material directMaterial) {
     if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
       System.out.println(String.format(
-          "[TransformableBoxConverter.aabbToPrimitives] Received color=0x%08X",
-          color));
+          "[TransformableBoxConverter.aabbToPrimitives] block=%s, color=0x%08X",
+          block.name, color));
     }
     List<Strip> strips = computeStrips(box, boxCorners(box), Flipped.none());
     if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
@@ -109,7 +117,7 @@ public class TransformableBoxConverter {
           "[BasicAABB] AABB=[%d,%d,%d]->[%d,%d,%d] grid=%d -> %d strips",
           box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ, grid.count, strips.size()));
     }
-    return emit(strips, grid, blockPos, texture, color, blockstate);
+    return emit(strips, grid, blockPos, texture, color, block, directMaterial);
   }
 
   /** Box corners in grid units, indexed by AngleID ordinal (E=maxX, U=maxY, N=minZ). */
@@ -481,43 +489,61 @@ public class TransformableBoxConverter {
     axis.addAll(result);
   }
 
-  /** Triangulate strips (convex fans) into world-space textured triangles. */
+  /**
+   * Triangulate strips (convex fans) into world-space textured triangles.
+   * C10: Uses vanilla Block as Material source, enabling Materials Tab property adjustments.
+   */
   private static Collection<Primitive> emit(
-      List<Strip> strips, LittleGrid grid, Vector3 blockPos, Texture texture, int color, String blockstate) {
+      List<Strip> strips, LittleGrid grid, Vector3 blockPos, Texture texture, int color, 
+      se.llbit.chunky.block.Block block, Material directMaterial) {
     // Create material with optional color tinting
+    // Special case: if directMaterial is provided (fluid blocks), use it directly to preserve special properties
     Material material;
     int effectiveColor = color;
     
-    // Debug: log blockstate parameter to diagnose tinting issue
+    // Debug: log block parameter
     if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
-      System.out.println(String.format("  [emit] blockstate='%s', color=0x%08X", 
-          blockstate == null ? "NULL" : blockstate, color));
+      System.out.println(String.format("  [emit] C10: block=%s, color=0x%08X", 
+          block.name, color));
     }
     
     // Apply default biome tinting for foliage blocks (Minecraft leaves/grass textures are grayscale)
-    if ((color == -1 || color == 0xFFFFFFFF) && blockstate != null) {
-      String lowerBlockstate = blockstate.toLowerCase();
+    if ((color == -1 || color == 0xFFFFFFFF) && block.name != null) {
+      String lowerBlockstate = block.name.toLowerCase();
       if (lowerBlockstate.contains("leaves") || lowerBlockstate.contains("vine") || 
           lowerBlockstate.contains("grass_block") || lowerBlockstate.contains("tall_grass") ||
-          lowerBlockstate.contains("fern") || lowerBlockstate.contains("seagrass")) {
+          lowerBlockstate.contains("fern")) {
         effectiveColor = 0xFF48B518;  // RGB(72, 181, 24) - default grass/foliage green
         if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
-          System.out.println(String.format("  [emit] Applied foliage tint to: %s", blockstate));
+          System.out.println(String.format("  [emit] C10: Applied foliage tint to: %s", block.name));
         }
       }
     }
     
-    if (effectiveColor == -1 || effectiveColor == 0xFFFFFFFF) {
-      // No tint: use plain TextureMaterial
-      material = new TextureMaterial(texture);
+    // C10: Determine material
+    if (directMaterial != null) {
+      // Fluid blocks: use Water/Lava Material directly to preserve refractive/emissive properties
+      material = directMaterial;
       if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
-        System.out.println(String.format("  [emit] Using TextureMaterial (no tint), color=0x%08X", color));
+        System.out.println(String.format("  [emit] Using directMaterial (fluid): %s", material.getClass().getSimpleName()));
       }
     } else {
-      // Apply color tint
-      material = new TintedTextureMaterial(texture, effectiveColor);
+      // C10: Use vanilla Block as Material
+      // When user adjusts properties in Materials Tab, BlockPalette.updateProperties() 
+      // updates the vanilla Block, and all tiles automatically inherit the changes
+      if (effectiveColor == -1 || effectiveColor == 0xFFFFFFFF) {
+        material = block;  // Use vanilla Block directly
+      } else {
+        // C10 Known Limitation: Tinted tiles use TintedTextureMaterial
+        // Material properties (emittance, specular, etc.) are copied at creation time
+        // and will NOT sync with Materials Tab adjustments.
+        // This is a Java limitation: Material properties are public fields accessed directly,
+        // and we cannot intercept field access to delegate to the vanilla Block.
+        material = new TintedTextureMaterial(texture, effectiveColor);
+      }
       if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
-        System.out.println(String.format("  [emit] Using TintedTextureMaterial, color=0x%08X", effectiveColor));
+        System.out.println(String.format("  [emit] C10: Using material, color=0x%08X, result=%s", 
+            effectiveColor, material.getClass().getSimpleName()));
       }
     }
     

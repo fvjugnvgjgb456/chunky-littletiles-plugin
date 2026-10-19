@@ -63,8 +63,9 @@ public class TransformableBoxConverterTest {
   @Test
   public void plainBox_givesSixFacesTwelveTriangles() {
     TransformableBox box = new TransformableBox(0, 0, 0, 8, 8, 8, zeroOffsets(), Flipped.none());
+    se.llbit.chunky.block.Block block = com.littletiles.chunky.MaterialResolver.resolveBlock("minecraft:stone");
     Collection<Primitive> prims = TransformableBoxConverter.boxToPrimitives(
-        box, new LittleGrid(16), new Vector3(0, 0, 0), Texture.stone);
+        box, new LittleGrid(16), new Vector3(0, 0, 0), Texture.stone, -1, block, null);
     assertEquals(12, prims.size());
     assertEquals(6 * 0.25, area(prims), 1e-9); // 6 faces of 0.5 x 0.5
   }
@@ -72,8 +73,9 @@ public class TransformableBoxConverterTest {
   @Test
   public void aabbPath_matchesBoxSize() {
     LittleBox box = new LittleBox(0, 0, 0, 2, 1, 2);
+    se.llbit.chunky.block.Block block = com.littletiles.chunky.MaterialResolver.resolveBlock("minecraft:stone");
     Collection<Primitive> prims = TransformableBoxConverter.aabbToPrimitives(
-        box, new LittleGrid(2), new Vector3(10, 76, 3), Texture.stone);
+        box, new LittleGrid(2), new Vector3(10, 76, 3), Texture.stone, -1, block, null);
     assertEquals(12, prims.size());
     assertInside(prims, new double[] {10, 76, 3}, new double[] {11, 76.5, 4});
   }
@@ -91,8 +93,9 @@ public class TransformableBoxConverterTest {
     o[AngleID.WDN.ordinal()] = off(-1, 0, -1);
     o[AngleID.WDS.ordinal()] = off(2, 0, 1);
     TransformableBox box = new TransformableBox(0, 0, 0, 2, 1, 2, o, Flipped.none());
+    se.llbit.chunky.block.Block block = com.littletiles.chunky.MaterialResolver.resolveBlock("minecraft:stone");
     Collection<Primitive> prims = TransformableBoxConverter.boxToPrimitives(
-        box, new LittleGrid(2), new Vector3(0, 0, 0), Texture.stone);
+        box, new LittleGrid(2), new Vector3(0, 0, 0), Texture.stone, -1, block, null);
     assertFalse(prims.isEmpty());
     assertInside(prims, new double[] {0, 0, 0}, new double[] {1, 0.5, 1});
   }
@@ -105,8 +108,9 @@ public class TransformableBoxConverterTest {
     o[AngleID.EUS.ordinal()] = off(6, 1, 0);
     o[AngleID.EDN.ordinal()] = off(6, 0, 2);
     TransformableBox box = new TransformableBox(2, 0, 2, 4, 1, 4, o, Flipped.none());
+    se.llbit.chunky.block.Block block = com.littletiles.chunky.MaterialResolver.resolveBlock("minecraft:stone");
     Collection<Primitive> prims = TransformableBoxConverter.boxToPrimitives(
-        box, new LittleGrid(4), new Vector3(7, 13, 15), Texture.stone);
+        box, new LittleGrid(4), new Vector3(7, 13, 15), Texture.stone, -1, block, null);
     assertFalse(prims.isEmpty());
     assertInside(prims, new double[] {7.5, 13, 15.5}, new double[] {8, 13.25, 16});
   }
@@ -118,8 +122,9 @@ public class TransformableBoxConverterTest {
     o[AngleID.EUN.ordinal()] = off(0, -16, 0);
     o[AngleID.WUN.ordinal()] = off(0, -16, 0);
     TransformableBox box = new TransformableBox(0, 0, 0, 16, 16, 16, o, Flipped.none());
+    se.llbit.chunky.block.Block block = com.littletiles.chunky.MaterialResolver.resolveBlock("minecraft:stone");
     Collection<Primitive> prims = TransformableBoxConverter.boxToPrimitives(
-        box, new LittleGrid(16), new Vector3(0, 0, 0), Texture.stone);
+        box, new LittleGrid(16), new Vector3(0, 0, 0), Texture.stone, -1, block, null);
     assertInside(prims, new double[] {0, 0, 0}, new double[] {1, 1, 1});
     boolean tilted = false;
     for (Primitive p : prims) {

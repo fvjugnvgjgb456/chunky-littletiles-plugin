@@ -28,9 +28,9 @@
 **推荐阅读**：
 - [Chunky 源码](https://github.com/chunky-dev/chunky)（特别是 `chunky-core` 模块）
 - [LittleTiles 源码](https://github.com/CreativeMD/LittleTiles)（1.6.0-pre234-BETA 分支）
-- [项目研究报告](file:///f:/TRAE_DEV/docs/review/INDEX.md)（A/B 系列研究）
-- [C7 完成总结](file:///f:/TRAE_DEV/docs/handoff/C7-FINAL-SUMMARY.md)（高级几何实现）
-- [C8 完成总结](file:///f:/TRAE_DEV/docs/handoff/C8-FINAL-SUMMARY.md)（Children & Color 实现）
+- 项目研究报告（../docs/review/INDEX.md）（A/B 系列研究）
+- C7 完成总结（../docs/handoff/C7-FINAL-SUMMARY.md）（高级几何实现）
+- C8 完成总结（../docs/handoff/C8-FINAL-SUMMARY.md）（Children & Color 实现）
 
 ---
 
@@ -76,7 +76,7 @@
 
 ### 1. BlockProvider 机制
 
-**文件**：[LTBlockProvider.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTBlockProvider.java)
+**文件**：LTBlockProvider.java (src/main/java/dev/trae/chunky/littletiles/LTBlockProvider.java)
 
 Chunky 通过 `BlockSpec.toBlock()` 遍历 `BlockProvider` 列表查询方块。我们的 `LTBlockProvider` 注册到列表首位，拦截 `littletiles:tiles`。
 
@@ -96,7 +96,7 @@ public Block getBlockByTag(String name, Tag tag) {
 
 ### 2. NBT 解析
 
-**文件**：[LTNBTParser.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTNBTParser.java)
+**文件**：LTNBTParser.java (src/main/java/dev/trae/chunky/littletiles/LTNBTParser.java)
 
 LittleTiles 1.6.0 NBT 结构：
 
@@ -133,7 +133,7 @@ BlockEntity
 
 ### 3. 基础几何转换
 
-**文件**：[GeometryConverter.java](chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/GeometryConverter.java)
+**文件**：GeometryConverter.java (src/main/java/com/littletiles/chunky/GeometryConverter.java)
 
 **坐标转换公式**：
 
@@ -155,7 +155,7 @@ worldCoord = blockPos + (gridCoord / grid.count)
 
 ### 4. 高级几何转换（C7）
 
-**文件**：[TransformableBoxConverter.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/c7/TransformableBoxConverter.java)
+**文件**：TransformableBoxConverter.java (src/main/java/dev/trae/chunky/littletiles/c7/TransformableBoxConverter.java)
 
 **核心算法**：
 
@@ -197,12 +197,12 @@ worldCoord = blockPos + (gridCoord / grid.count)
 - `Flipped`: 6 个面的翻转状态（影响顶点顺序）
 
 **参考实现**：
-- [Minecraft-Littletiles-Reader](Minecraft-Littletiles-Reader/Galib/Minecraft/LittleTilesEntity.cpp)（C++ 参考）
-- [LittleTransformableBox.java](LittleTiles/src/main/java/team/creative/littletiles/common/structure/type/premade/LittleTransformableBox.java#L217-L370)（LittleTiles 源码）
+- Minecraft-Littletiles-Reader（C++ 参考）
+- LittleTiles 源码中的 LittleTransformableBox.java
 
 ### 5. Children 嵌套结构（C8）
 
-**文件**：[LTNBTParser.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTNBTParser.java#L100-L150)
+**文件**：LTNBTParser.java (src/main/java/dev/trae/chunky/littletiles/LTNBTParser.java, parseChildren 方法)
 
 **递归解析逻辑**：
 
@@ -230,13 +230,13 @@ private static List<ChildStructure> parseChildren(CompoundTag content, int depth
 - 不需要累加父级偏移
 
 **渲染集成**：
-- [LTTilesEntity.primitives()](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTTilesEntity.java#L50-L80) 遍历主 tiles + 所有 children
+- LTTilesEntity.primitives() (src/main/java/dev/trae/chunky/littletiles/LTTilesEntity.java) 遍历主 tiles + 所有 children
 
 ### 6. Color 染色系统（C8）
 
 **文件**：
-- [TintedTextureMaterial.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/c7/TintedTextureMaterial.java)
-- [TransformableBoxConverter.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/c7/TransformableBoxConverter.java#L480-L520)
+- TintedTextureMaterial.java (src/main/java/dev/trae/chunky/littletiles/c7/TintedTextureMaterial.java)
+- TransformableBoxConverter.java (src/main/java/dev/trae/chunky/littletiles/c7/TransformableBoxConverter.java, emit 方法)
 
 **核心实现**：
 
@@ -277,7 +277,7 @@ private static List<ChildStructure> parseChildren(CompoundTag content, int depth
 
 ### 7. 材质映射
 
-**文件**：[MaterialResolver.java](chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/MaterialResolver.java)
+**文件**：MaterialResolver.java (src/main/java/com/littletiles/chunky/MaterialResolver.java)
 
 **当前策略**：
 
@@ -300,7 +300,7 @@ private static List<ChildStructure> parseChildren(CompoundTag content, int depth
 
 ### 8. 日志系统
 
-**文件**：[DebugConfig.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/DebugConfig.java)
+**文件**：DebugConfig.java (src/main/java/dev/trae/chunky/littletiles/DebugConfig.java)
 
 **配置项**：
 
@@ -315,7 +315,7 @@ ENABLE_WARNINGS = false;              // Warning 日志和 GUI 弹窗
 
 **修改配置**：
 
-1. 编辑 [DebugConfig.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/DebugConfig.java)
+1. 编辑 DebugConfig.java (src/main/java/dev/trae/chunky/littletiles/DebugConfig.java)
 2. 重新编译插件（`./gradlew build`）
 3. 重启 Chunky
 
@@ -380,7 +380,7 @@ void testNewFeature() {
 
 ### 性能监控
 
-**文件**：[PerformanceMonitor.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/PerformanceMonitor.java)
+**文件**：PerformanceMonitor.java (src/main/java/dev/trae/chunky/littletiles/PerformanceMonitor.java)
 
 会话结束时输出汇总报告：
 
@@ -400,9 +400,9 @@ MaterialResolver Cache: size=122, hits=672748, misses=122, hit rate=100.0%
 ### 1. 添加新的 Box 格式支持
 
 **文件修改**：
-1. [LTNBTParser.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTNBTParser.java) — `parseTile()` 方法
-2. [GeometryConverter.java](chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/GeometryConverter.java) 或创建新的 Converter
-3. [LTTilesEntity.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTTilesEntity.java) — 调用新转换方法
+1. LTNBTParser.java (src/main/java/dev/trae/chunky/littletiles/LTNBTParser.java) — `parseTile()` 方法
+2. GeometryConverter.java (src/main/java/com/littletiles/chunky/GeometryConverter.java) 或创建新的 Converter
+3. LTTilesEntity.java (src/main/java/dev/trae/chunky/littletiles/LTTilesEntity.java) — 调用新转换方法
 
 **测试**：
 - 单元测试（解析、转换）
@@ -422,9 +422,9 @@ MaterialResolver Cache: size=122, hits=672748, misses=122, hit rate=100.0%
 ### 3. 支持 Fluid 方块（C9 计划）
 
 **文件修改**：
-1. [LTTile.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTTile.java) — 添加 `fluid` 字段
-2. [LTNBTParser.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTNBTParser.java) — 解析 fluid 字段
-3. [GeometryConverter.java](chunky-littletiles-plugin/src/main/java/com/littletiles/chunky/GeometryConverter.java) — 流体几何生成
+1. LTTile.java (src/main/java/dev/trae/chunky/littletiles/LTTile.java) — 添加 `fluid` 字段
+2. LTNBTParser.java (src/main/java/dev/trae/chunky/littletiles/LTNBTParser.java) — 解析 fluid 字段
+3. GeometryConverter.java (src/main/java/com/littletiles/chunky/GeometryConverter.java) — 流体几何生成
 
 **注意事项**：
 - 需要先研究 LittleTiles 的 `BlockWater.java` 和 `BlockLava.java`
@@ -448,7 +448,7 @@ MaterialResolver Cache: size=122, hits=672748, misses=122, hit rate=100.0%
 
 ### 1. 启用详细日志
 
-编辑 [DebugConfig.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/DebugConfig.java)：
+编辑 DebugConfig.java (src/main/java/dev/trae/chunky/littletiles/DebugConfig.java)：
 
 ```java
 VERBOSE_NBT_PARSER = true;
@@ -557,12 +557,21 @@ ENABLE_WARNINGS = true;
 
 ---
 
+## 资源链接
+
+### 项目文档
+- 任务索引（../docs/tasks/INDEX.md） — 所有任务单
+- 研究报告（../docs/review/INDEX.md） — A/B 系列研究
+- 交接文件（../docs/handoff/CURRENT.md） — 当前状态
+- C7 完成总结（../docs/handoff/C7-FINAL-SUMMARY.md） — 高级几何实现
+- C8 完成总结（../docs/handoff/C8-FINAL-SUMMARY.md） — Children & Color 实现
+
 ### 外部资源
 - [Chunky 文档](https://chunky-dev.github.io/docs/)
 - [Chunky 源码](https://github.com/chunky-dev/chunky)
 - [LittleTiles Wiki](https://github.com/CreativeMD/LittleTiles/wiki)
 - [NBT 格式规范](https://minecraft.wiki/w/NBT_format)
-- [Minecraft-Littletiles-Reader](https://github.com/Gaksy/Minecraft-Littletiles-Reader)（C++ 参考实现）
+- Minecraft-Littletiles-Reader（C++ 参考实现）
 
 ---
 
@@ -571,12 +580,34 @@ ENABLE_WARNINGS = true;
 1. **查看已有文档**：README、INSTALL、本文件
 2. **搜索 Issues**：检查是否已有人遇到相同问题
 3. **查看源码注释**：关键类和方法都有详细注释
-4. **提 Issue**：提供完整错误日志和复现步骤
+4. **查看研究报告**：../docs/review/topics/ 目录
+5. **提 Issue**：提供完整错误日志和复现步骤
 
 **不要**：
 - 在没有阅读文档的情况下提问
 - 发送不完整的错误信息
 - 期望立即得到回复（这是个人项目）
+
+---
+
+## 下一步开发方向
+
+### 短期目标（已完成）
+- ✅ 流体方块支持（water/lava/white_lava）- C9 完成
+- ✅ LT 染色方块（16 种纹理）- C9 完成
+- ✅ Chunky Materials 功能集成（无色 tiles 支持）- C10 完成
+
+### 中期目标
+- 有色 tiles 的 Materials Tab 同步（需要与 Chunky 核心团队合作）
+- blockstate 属性支持（facing/waterlogged 等）
+- 流动 Fluid 支持（flowing[facing=...]）
+- 模组方块纹理加载
+- 性能优化与压力测试
+
+### 长期目标
+- 透明/发光材质优化
+- 动态流体动画
+- 自定义材质包支持
 
 ---
 
@@ -591,9 +622,9 @@ ENABLE_WARNINGS = true;
 - 面积检测（跳过退化面）
 
 **关键文件**：
-- [TransformableBoxConverter.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/c7/TransformableBoxConverter.java) — 核心转换器
-- [BoxParser.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/c7/BoxParser.java) — NBT 解析器链
-- [AngleID.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/c7/AngleID.java) — 8 角点枚举
+- TransformableBoxConverter.java (src/main/java/dev/trae/chunky/littletiles/c7/TransformableBoxConverter.java) — 核心转换器
+- BoxParser.java (src/main/java/dev/trae/chunky/littletiles/c7/BoxParser.java) — NBT 解析器链
+- AngleID.java (src/main/java/dev/trae/chunky/littletiles/c7/AngleID.java) — 8 角点枚举
 
 **经验总结**：
 - 坐标系统理解至关重要（Minecraft Z 轴：North = -Z 方向 = minZ）
@@ -608,11 +639,35 @@ ENABLE_WARNINGS = true;
 - 生物群系染色（树叶、草方块默认绿色）
 
 **关键文件**：
-- [LTNBTParser.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LTNBTParser.java#L100-L150) — parseChildren()
-- [TintedTextureMaterial.java]chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/c7/TintedTextureMaterial.java) — 染色材质
-- [TransformableBoxConverter.java](chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/c7/TransformableBoxConverter.java#L480-L520) — emit() 方法
+- LTNBTParser.java (src/main/java/dev/trae/chunky/littletiles/LTNBTParser.java, parseChildren 方法) — parseChildren()
+- TintedTextureMaterial.java (src/main/java/dev/trae/chunky/littletiles/c7/TintedTextureMaterial.java) — 染色材质
+- TransformableBoxConverter.java (src/main/java/dev/trae/chunky/littletiles/c7/TransformableBoxConverter.java, emit 方法) — emit() 方法
 
 **经验总结**：
 - Chunky 的 `getColor(double u, double v)` 而非 `getColor(Ray ray)`
 - 生物群系染色需要 blockstate 条件检查（避免过度应用）
 - Children 坐标系统与主 tiles 相同（不需要累加偏移）
+
+### C9/C10: Fluid & Materials 支持
+
+**核心成果**：
+- Fluid 方块映射（colored_water/colored_lava → Water/Lava）
+- LT 染色方块映射（16 种纹理 → 原版相似方块）
+- Materials Tab 集成（无色 tiles 属性同步）
+- 简化架构（直接使用原版 Block，无虚拟 Block 层）
+
+**关键文件**：
+- MaterialResolver.java (src/main/java/com/littletiles/chunky/MaterialResolver.java) — resolveBlock(), mapLittleTilesToVanilla()
+- GeometryConverter.java (src/main/java/com/littletiles/chunky/GeometryConverter.java) — Block 集成
+- TransformableBoxConverter.java (src/main/java/dev/trae/chunky/littletiles/c7/TransformableBoxConverter.java, 材质决策逻辑) — 材质决策逻辑
+
+**已知限制**：
+- 有色 tiles（使用 TintedTextureMaterial）不会同步 Materials Tab 属性调整
+- 原因：Java 公共字段限制，Material 属性无法动态委托
+- 影响：用户调整原版方块属性时，只有无色 tiles 自动同步
+
+**经验总结**：
+- Chunky 的 `Material` 属性是公共字段，不是 getter 方法
+- `BlockPalette.updateProperties()` 只更新注册在 `palette` 中的 Block
+- 插件创建的 Material 实例不会被 BlockPalette 管理
+- 完全解决需要 Chunky 核心架构层面的修改（如属性 getter 接口）
