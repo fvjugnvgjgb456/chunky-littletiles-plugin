@@ -1,30 +1,4 @@
-6LTNBTParser: parsed 0 tiles, 0 children with grid=16
 -Parsed Entity: grid=16, tiles=0, children=0
-6LTNBTParser: parsed 0 tiles, 0 children with grid=16
 -Parsed Entity: grid=16, tiles=0, children=0
-6LTNBTParser: parsed 0 tiles, 0 children with grid=16
 -Parsed Entity: grid=16, tiles=0, children=0
-6LTNBTParser: parsed 0 tiles, 0 children with grid=32
 -Parsed Entity: grid=32, tiles=0, children=0
-%LTTilesEntity at (10.0, 64.0, 20.0)
-)+ITransformableBoxParser: parsed box with 0 enabled offsets, flipped=true
-01U[TransformableBoxConverter.boxToPrimitives] block=minecraft:stone, color=0xFFFFFFFF
-01>[TransformableBox] AABB=[0,0,0]->[8,8,8] grid=16 -> 6 strips
-017  [emit] C10: block=minecraft:stone, color=0xFFFFFFFF
-01E  [emit] C10: Using material, color=0xFFFFFFFF, result=UnknownBlock
-02U[TransformableBoxConverter.boxToPrimitives] block=minecraft:stone, color=0xFFFFFFFF
-02A[TransformableBox] AABB=[0,0,0]->[16,16,16] grid=16 -> 5 strips
-027  [emit] C10: block=minecraft:stone, color=0xFFFFFFFF
-02E  [emit] C10: Using material, color=0xFFFFFFFF, result=UnknownBlock
-03U[TransformableBoxConverter.boxToPrimitives] block=minecraft:stone, color=0xFFFFFFFF
-03=[TransformableBox] AABB=[2,0,2]->[4,1,4] grid=4 -> 6 strips
-037  [emit] C10: block=minecraft:stone, color=0xFFFFFFFF
-03E  [emit] C10: Using material, color=0xFFFFFFFF, result=UnknownBlock
-04V[TransformableBoxConverter.aabbToPrimitives] block=minecraft:stone, color=0xFFFFFFFF
-046[BasicAABB] AABB=[0,0,0]->[2,1,2] grid=2 -> 6 strips
-047  [emit] C10: block=minecraft:stone, color=0xFFFFFFFF
-04E  [emit] C10: Using material, color=0xFFFFFFFF, result=UnknownBlock
-05U[TransformableBoxConverter.boxToPrimitives] block=minecraft:stone, color=0xFFFFFFFF
-05=[TransformableBox] AABB=[0,0,0]->[2,1,2] grid=2 -> 8 strips
-057  [emit] C10: block=minecraft:stone, color=0xFFFFFFFF
-05E  [emit] C10: Using material, color=0xFFFFFFFF, result=UnknownBlock

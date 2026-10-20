@@ -67,8 +67,63 @@
 | **基础几何** | 立方体转换 | `GeometryConverter` |
 | **高级几何（C7）** | 变形 box 转换 | `TransformableBoxConverter`, `BoxParser`, `AngleID`, `AngleOffset` |
 | **材质系统** | 纹理映射 | `MaterialResolver`, `TintedTextureMaterial` (C8) |
-| **日志控制** | 调试开关 | `DebugConfig`, `FileLogReceiver`, `TeeOutputStream` |
+| **日志控制** | 调试开关 | `DebugConfig`, `ConfigLoader`, `FileLogReceiver`, `TeeOutputStream` |
 | **性能监控** | 统计数据 | `PerformanceMonitor` |
+
+---
+
+## 配置系统（C11）
+
+### 配置文件加载机制
+
+**文件**：[ConfigLoader.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/ConfigLoader.java)
+
+插件支持外部配置文件自定义行为。配置文件位置：
+- **Windows**: `%USERPROFILE%\.chunky\plugins\littletiles-plugin-config.properties`
+- **Linux/Mac**: `~/.chunky/plugins/littletiles-plugin-config.properties`
+
+**加载流程**：
+1. ConfigLoader 单例初始化（静态块）
+2. 尝试从外部路径加载配置
+3. 失败时回退到 JAR 内 bundled 模板（`resources/littletiles-plugin-config.properties`）
+4. DebugConfig 静态初始化时读取 ConfigLoader 配置
+
+**关键特性**：
+- 类型安全的配置读取（`getBoolean()`, `getInt()`, `getString()`）
+- 完善的错误处理和默认值回退
+- 启动时打印配置摘要（`printConfigSummary()`）
+
+### 文件日志开关
+
+**文件**：[LittleTilesPlugin.java](file:///f:/TRAE_DEV/chunky-littletiles-plugin/src/main/java/dev/trae/chunky/littletiles/LittleTilesPlugin.java) `attach()` 方法
+
+根据 `ENABLE_FILE_LOGGING` 配置决定是否创建日志文件：
+
+```java
+ConfigLoader config = ConfigLoader.getInstance();
+boolean enableFileLogging = config.getBoolean(
+    ConfigLoader.KEY_ENABLE_FILE_LOGGING, true);
+
+if (enableFileLogging) {
+  // 创建 TeeOutputStream 重定向 System.out/err
+  // 日志同时输出到控制台和文件
+} else {
+  // 仅输出到 Chunky 控制台，不创建日志文件
+}
+```
+
+**配置选项**：
+- `ENABLE_FILE_LOGGING`: 文件日志总开关（默认 `true`）
+- `VERBOSE_NBT_PARSER`: NBT 解析详细日志（默认 `false`，大型场景产生 100+ MB 日志）
+- `VERBOSE_ENTITY_CONSTRUCTION`: Entity 构造日志（默认 `false`）
+- `VERBOSE_PRIMITIVE_GENERATION`: 几何生成日志（默认 `false`）
+- `VERBOSE_BOX_PARSING`: Box 解析日志（默认 `false`）
+- `ENABLE_PERFORMANCE_TIMING`: 性能计时（默认 `true`）
+- `ENABLE_SUMMARY_STATS`: 统计摘要（默认 `false`）
+- `ENABLE_WARNINGS`: 警告消息（默认 `false`，触发 GUI 弹窗）
+- `ENABLE_TRANSFORMABLE_BOX`: TransformableBox 功能开关（默认 `true`）
+
+修改配置后需重启 Chunky 生效。
 
 ---
 

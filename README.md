@@ -65,6 +65,45 @@ cd chunky-littletiles-plugin
 
 完整安装指南见 [INSTALL.md](INSTALL.md)。
 
+## 配置
+
+插件支持通过外部配置文件自定义行为。配置文件位置：
+
+**Windows**: `%USERPROFILE%\.chunky\plugins\littletiles-plugin-config.properties`  
+**Linux/Mac**: `~/.chunky/plugins/littletiles-plugin-config.properties`
+
+### 配置选项
+
+创建配置文件并添加以下选项（所有选项均可选，默认值见注释）：
+
+```properties
+# 文件日志开关（默认: true）
+# 设为 false 时日志仅输出到 Chunky 控制台，不创建日志文件
+ENABLE_FILE_LOGGING=true
+
+# 详细日志选项（默认: false）
+# 警告: 在大型场景中可能产生 100+ MB 日志文件
+VERBOSE_NBT_PARSER=false              # NBT 解析详细日志
+VERBOSE_ENTITY_CONSTRUCTION=false     # Entity 构造详细日志
+VERBOSE_PRIMITIVE_GENERATION=false    # 几何生成详细日志
+VERBOSE_BOX_PARSING=false             # Box 解析详细日志
+
+# 性能与统计（默认值见注释）
+ENABLE_PERFORMANCE_TIMING=true        # 性能计时
+ENABLE_SUMMARY_STATS=false            # 统计摘要
+
+# 警告消息（默认: false）
+# 警告: 每条警告会触发 Chunky GUI 弹窗
+ENABLE_WARNINGS=false
+
+# 功能开关（默认: true）
+ENABLE_TRANSFORMABLE_BOX=true         # TransformableBox 高级几何支持
+```
+
+**完整配置模板**见插件 JAR 内的 `littletiles-plugin-config.properties`。
+
+修改配置后需要重启 Chunky 生效。
+
 ## 使用
 
 1. 在 Chunky 中加载包含 LittleTiles 建筑的 Minecraft 存档

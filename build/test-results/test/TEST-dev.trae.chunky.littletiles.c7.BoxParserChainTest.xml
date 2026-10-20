@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dev.trae.chunky.littletiles.c7.BoxParserChainTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-19T14:10:28" hostname="DESKTOP-HK74072" time="0.006">
+<testsuite name="dev.trae.chunky.littletiles.c7.BoxParserChainTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-20T09:00:50" hostname="DESKTOP-HK74072" time="0.003">
   <properties/>
   <testcase name="testTransformableBoxParser_rejectsPositiveIndicator()" classname="dev.trae.chunky.littletiles.c7.BoxParserChainTest" time="0.001"/>
   <testcase name="testParserChain_basicBoxFallsBackToBasicParser()" classname="dev.trae.chunky.littletiles.c7.BoxParserChainTest" time="0.0"/>
   <testcase name="testTransformableBoxParser_acceptsNegativeIndicator()" classname="dev.trae.chunky.littletiles.c7.BoxParserChainTest" time="0.001"/>
-  <testcase name="testTransformableBoxParser_rejectsBasicBox()" classname="dev.trae.chunky.littletiles.c7.BoxParserChainTest" time="0.001"/>
-  <testcase name="testBasicBoxParser_rejects7Fields()" classname="dev.trae.chunky.littletiles.c7.BoxParserChainTest" time="0.0"/>
+  <testcase name="testTransformableBoxParser_rejectsBasicBox()" classname="dev.trae.chunky.littletiles.c7.BoxParserChainTest" time="0.0"/>
+  <testcase name="testBasicBoxParser_rejects7Fields()" classname="dev.trae.chunky.littletiles.c7.BoxParserChainTest" time="0.001"/>
   <testcase name="testBasicBoxParser_6Fields()" classname="dev.trae.chunky.littletiles.c7.BoxParserChainTest" time="0.0"/>
-  <system-out><![CDATA[TransformableBoxParser: parsed box with 0 enabled offsets, flipped=true
-]]></system-out>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

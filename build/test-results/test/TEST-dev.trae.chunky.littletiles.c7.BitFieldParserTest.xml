@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dev.trae.chunky.littletiles.c7.BitFieldParserTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-19T14:10:28" hostname="DESKTOP-HK74072" time="0.005">
+<testsuite name="dev.trae.chunky.littletiles.c7.BitFieldParserTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-10-20T09:00:50" hostname="DESKTOP-HK74072" time="0.004">
   <properties/>
-  <testcase name="testNotTransformableBox()" classname="dev.trae.chunky.littletiles.c7.BitFieldParserTest" time="0.002"/>
+  <testcase name="testNotTransformableBox()" classname="dev.trae.chunky.littletiles.c7.BitFieldParserTest" time="0.001"/>
   <testcase name="testNegativeOffsets()" classname="dev.trae.chunky.littletiles.c7.BitFieldParserTest" time="0.001"/>
   <testcase name="testGoldenCase_README()" classname="dev.trae.chunky.littletiles.c7.BitFieldParserTest" time="0.0"/>
-  <testcase name="testInsufficientPackedOffsets()" classname="dev.trae.chunky.littletiles.c7.BitFieldParserTest" time="0.0"/>
+  <testcase name="testInsufficientPackedOffsets()" classname="dev.trae.chunky.littletiles.c7.BitFieldParserTest" time="0.001"/>
   <testcase name="testInvalidLength()" classname="dev.trae.chunky.littletiles.c7.BitFieldParserTest" time="0.0"/>
-  <testcase name="testAllCornersEnabled()" classname="dev.trae.chunky.littletiles.c7.BitFieldParserTest" time="0.0"/>
+  <testcase name="testAllCornersEnabled()" classname="dev.trae.chunky.littletiles.c7.BitFieldParserTest" time="0.001"/>
   <testcase name="testNoOffsetsOnlyFlips()" classname="dev.trae.chunky.littletiles.c7.BitFieldParserTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
