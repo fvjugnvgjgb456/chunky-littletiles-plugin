@@ -653,16 +653,13 @@ ENABLE_WARNINGS = true;
 - ✅ Chunky Materials 功能集成（无色 tiles 支持）- C10 完成
 
 ### 中期目标
-- 有色 tiles 的 Materials Tab 同步（需要与 Chunky 核心团队合作）
 - blockstate 属性支持（facing/waterlogged 等）
-- 流动 Fluid 支持（flowing[facing=...]）
 - 模组方块纹理加载
 - 性能优化与压力测试
 
 ### 长期目标
 - 透明/发光材质优化
-- 动态流体动画
-- 自定义材质包支持
+
 
 ---
 
