@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-20T09:00:50" hostname="DESKTOP-HK74072" time="0.014">
+<testsuite name="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-21T07:57:16" hostname="DESKTOP-HK74072" time="0.018">
   <properties/>
-  <testcase name="uv_isBlockRelative()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.003"/>
-  <testcase name="plainBox_givesSixFacesTwelveTriangles()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.007"/>
+  <testcase name="uv_isBlockRelative()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.002"/>
+  <testcase name="plainBox_givesSixFacesTwelveTriangles()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.011"/>
   <testcase name="slope_hasTiltedFaceInsideBox()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.002"/>
-  <testcase name="largeOffsetsFromLog_doNotRaiseTile()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
+  <testcase name="largeOffsetsFromLog_doNotRaiseTile()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.0"/>
   <testcase name="aabbPath_matchesBoxSize()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.0"/>
   <testcase name="readmeGoldenCase_staysInsideAabb()" classname="dev.trae.chunky.littletiles.c7.TransformableBoxConverterTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>

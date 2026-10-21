@@ -48,6 +48,7 @@ public class PerformanceMonitor {
         totalEntities > 0 ? (double)totalBuildTimeMs / totalEntities : 0,
         totalTiles > 0 ? (double)totalBuildTimeMs / totalTiles : 0));
     sb.append(MaterialResolver.getCacheStats()).append("\n");
+    sb.append(VectorPool.getPoolStats()).append("\n");
     sb.append("============================================\n");
     return sb.toString();
   }
@@ -58,8 +59,10 @@ public class PerformanceMonitor {
   public static void reset() {
     totalEntities = 0;
     totalTiles = 0;
-    totalPrimitives = 0;
     totalBuildTimeMs = 0;
+    totalPrimitives = 0;
     MaterialResolver.clearCache();
+    VectorPool.setStatsEnabled(DebugConfig.ENABLE_PERFORMANCE_TIMING);
+    VectorPool.resetStats();
   }
 }

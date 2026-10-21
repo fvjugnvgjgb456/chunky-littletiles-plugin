@@ -28,6 +28,9 @@
 **推荐阅读**：
 - [Chunky 源码](https://github.com/chunky-dev/chunky)（特别是 `chunky-core` 模块）
 - [LittleTiles 源码](https://github.com/CreativeMD/LittleTiles)（1.6.0-pre234-BETA 分支）
+- 项目研究报告（../docs/review/INDEX.md）（A/B 系列研究）
+- C7 完成总结（../docs/handoff/C7-FINAL-SUMMARY.md）（高级几何实现）
+- C8 完成总结（../docs/handoff/C8-FINAL-SUMMARY.md）（Children & Color 实现）
 
 ---
 
@@ -608,6 +611,15 @@ ENABLE_WARNINGS = true;
    - 改进方向：动态深度检测或迭代实现
 
 ---
+
+## 资源链接
+
+### 项目文档
+- 任务索引（../docs/tasks/INDEX.md） — 所有任务单
+- 研究报告（../docs/review/INDEX.md） — A/B 系列研究
+- 交接文件（../docs/handoff/CURRENT.md） — 当前状态
+- C7 完成总结（../docs/handoff/C7-FINAL-SUMMARY.md） — 高级几何实现
+- C8 完成总结（../docs/handoff/C8-FINAL-SUMMARY.md） — Children & Color 实现
 
 ### 外部资源
 - [Chunky 文档](https://chunky-dev.github.io/docs/)

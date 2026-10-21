@@ -2,6 +2,7 @@ package dev.trae.chunky.littletiles.c7;
 
 import dev.trae.chunky.littletiles.DebugConfig;
 import dev.trae.chunky.littletiles.LittleGrid;
+import dev.trae.chunky.littletiles.VectorPool;
 import se.llbit.chunky.resources.Texture;
 import se.llbit.chunky.world.Material;
 import se.llbit.chunky.world.material.TextureMaterial;
@@ -549,15 +550,46 @@ public class TransformableBoxConverter {
     
     double scale = 1.0 / grid.count;
     List<Primitive> primitives = new ArrayList<>();
+    
+    // C11 Phase 2: Use VectorPool to reduce temporary object allocations
+    if (DebugConfig.VERBOSE_PRIMITIVE_GENERATION) {
+      System.out.println("[emit] C11: Starting with VectorPool optimization, strips=" + strips.size());
+    }
+    
     for (Strip strip : strips) {
       int n = strip.points.length;
       Vector3[] w = new Vector3[n];
       Vector2[] uv = new Vector2[n];
+      
+      // Obtain temporary vectors from pool
+      Vector3[] wTemp = new Vector3[n];
+      Vector2[] uvTemp = new Vector2[n];
+      for (int k = 0; k < n; k++) {
+        wTemp[k] = VectorPool.obtainVector3();
+        uvTemp[k] = VectorPool.obtainVector2();
+      }
+      
+      // Calculate world positions and UVs using pooled vectors
       for (int k = 0; k < n; k++) {
         double[] local = {strip.points[k][0] * scale, strip.points[k][1] * scale, strip.points[k][2] * scale};
-        w[k] = new Vector3(blockPos.x + local[0], blockPos.y + local[1], blockPos.z + local[2]);
-        uv[k] = uv(strip.facing, local);
+        wTemp[k].set(blockPos.x + local[0], blockPos.y + local[1], blockPos.z + local[2]);
+        Vector2 uvResult = uv(strip.facing, local);
+        uvTemp[k].set(uvResult.x, uvResult.y);
       }
+      
+      // Copy to final arrays (TexturedTriangle needs owned vectors)
+      for (int k = 0; k < n; k++) {
+        w[k] = new Vector3(wTemp[k]);
+        uv[k] = new Vector2(uvTemp[k]);
+      }
+      
+      // Return pooled vectors
+      for (int k = 0; k < n; k++) {
+        VectorPool.freeVector3(wTemp[k]);
+        VectorPool.freeVector2(uvTemp[k]);
+      }
+      
+      // Generate triangles
       for (int k = 1; k + 1 < n; k++) {
         double[] e1 = {w[k].x - w[0].x, w[k].y - w[0].y, w[k].z - w[0].z};
         double[] e2 = {w[k + 1].x - w[0].x, w[k + 1].y - w[0].y, w[k + 1].z - w[0].z};
