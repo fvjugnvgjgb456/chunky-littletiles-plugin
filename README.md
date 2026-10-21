@@ -22,7 +22,7 @@ Chunky 插件，用于在静态场景中渲染 Minecraft LittleTiles 模组建�
 
 ### 已知问题
 - 大规模场景 BVH 构建时间长（优化空间有限）
-- 没有 GUI 配置界面（需要手动编辑 DebugConfig.java，会在后续alpha版本优化。）
+- 没有 GUI 配置界面（需要手动编辑plugin-config.properties）
 
 ## 版本兼容性
 
